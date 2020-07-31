@@ -1,0 +1,3 @@
+[submodule "FaceDetection/tensorflow-yolov4-tflite"]
+	path = FaceDetection/tensorflow-yolov4-tflite
+	url = https://github.com/hunglc007/tensorflow-yolov4-tflite
