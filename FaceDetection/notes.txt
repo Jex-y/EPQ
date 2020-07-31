@@ -1,0 +1,7 @@
+Working Title: Exploring the implementation and ethical consequenses of facial recgnition.
+Aim is to first build a facial recognition system and then find ways to get around it. 
+Official Yolov4 is  https://github.com/AlexeyAB/darknet but using https://github.com/hunglc007/tensorflow-yolov4-tflite as it uses tensorflow that I already know. 
+It also supports tflite meaning that it can be used for edge computing such as phones and SOCs. 
+Reference https://arxiv.org/abs/2004.10934
+Workflow for final image should be preprocess -> face detection -> face recognition
+Most of it should be done in notebooks as it can be easily presented.
