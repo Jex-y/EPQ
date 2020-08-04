@@ -1,0 +1,3 @@
+[submodule "FaceDetection/yolo"]
+	path = FaceDetection/yolo
+	url = git@github.com:Jex-y/yolo.git
