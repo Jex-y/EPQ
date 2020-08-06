@@ -20,7 +20,7 @@ def main():
     to_do = len(dataset_raw)
     count = 1
     examples = 0
-    classes_list = []
+    classes_list = ["DONOTUSEME"]
 
     train_path = os.path.join(DATASET_DIR, "train.tfrecord")
     num_train = int(to_do * (1-TEST_SPLIT))
@@ -54,12 +54,12 @@ def main():
                 ymins.append(min( y_values ))
                 ymaxs.append(max( y_values ))
 
-
+        
             tf_example = tf.train.Example(features=tf.train.Features(feature={
                 'image/height': int64_feature(example["annotation"][0]["imageHeight"]),
                 'image/width': int64_feature(example["annotation"][0]["imageWidth"]),
                 'image/filename': bytes_feature(str.encode(filename)),
-                'image/source_id': bytes_feature(str.encode(filename)),
+                'image/source_id': bytes_feature(str.encode(example["content"])),
                 'image/encoded': bytes_feature(encoded_image_data),
                 'image/format': bytes_feature(b"jpeg"),
                 'image/object/bbox/xmin': float_list_feature(xmins),
@@ -74,10 +74,13 @@ def main():
             else:
                 train_writer.write(tf_example.SerializeToString())
             examples += 1
-        except:
+        except Exception as e:
+            print(e)
             pass
     
     num_train = examples - num_test
+    class_dict = dict(enumerate(classes_list))
+    class_dict.pop(0)
 
     offline_dataset = {
         "train":{
@@ -90,7 +93,7 @@ def main():
         },
         "classes":{
             "num_classes":len(classes_list),
-            "class_names":dict(enumerate(classes_list)),
+            "class_names":class_dict,
         },
     }
 

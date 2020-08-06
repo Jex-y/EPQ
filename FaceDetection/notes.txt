@@ -5,3 +5,15 @@ It also supports tflite meaning that it can be used for edge computing such as p
 Reference https://arxiv.org/abs/2004.10934
 Workflow for final image should be preprocess -> face detection -> face recognition
 Most of it should be done in notebooks as it can be easily presented.
+
+
+[06/08/20]
+Ok so not notebooks they are awful.
+I am writing it as a library so that it can be reused by other people and myself in the future.
+The model.py and layers.py use the same architecture from tensorflow-yolov4-tflite but written in a more tensorflow 2.0 like style.
+I tried writing the dataset processing using tf.data and encoding it in .tfrecord files. This worked greate until the "if not exsists positive" part where the autograph function fails for some reason. 
+I am not sure if it is a bug in tensorflow or I have misunderstood the framework.
+Therefore I have two options: Submit a bug report and hope it gets fixed or someone points out my error, or I do the tfrecord parsing and data preprocessing in normal python and then take it to tf.data when I need to augment and batch the data.
+I spend a while thinking about where the parsing and preprocess should be done. With tf.data I was going to make it part of the model and used a yolo superclass so that I can reuse the code.
+Without tf.data I am not sure I think it should go in a seperate YOLODataset class which then has a to tf.data method.
+Overall, good progress but its starting to slow. 
