@@ -17,3 +17,13 @@ Therefore I have two options: Submit a bug report and hope it gets fixed or some
 I spend a while thinking about where the parsing and preprocess should be done. With tf.data I was going to make it part of the model and used a yolo superclass so that I can reuse the code.
 Without tf.data I am not sure I think it should go in a seperate YOLODataset class which then has a to tf.data method.
 Overall, good progress but its starting to slow. 
+
+[08/08/20]
+I am very behind schedule because I was initially unsure of if I was going to do the project. 
+I need to do a literature review first. For this I am going to include the yolov3 and v4 papers as they are both useful resources. 
+Also, I need to quicly read the book on AI ethics, the tensorflow 2.0 guide and finish super inteligence.
+The model itself is currently a secondary prority as the paper itself must come first. 
+
+Then I need to plan and draft the discussion. 
+
+The good news is that I think that I have figured out the dataset flow. 

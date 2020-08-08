@@ -4,11 +4,12 @@ import io
 import hashlib
 import json
 import yaml
-import tensorflow as tf
+import numpy as np
 
 DATASET_DIR = "./data/"
 CLASS_FILE = "classes.yml"
 TEST_SPLIT = 0.2
+RANDOM_SEED = 42
 
 def main():
     if not os.path.exists(DATASET_DIR):
@@ -17,24 +18,28 @@ def main():
     with open("dataset_online.json") as f:
         dataset_raw = [json.loads(line) for line in f.read().split("\n") if len(line) > 1]
 
+    np.random.seed(RANDOM_SEED)
+    np.random.shuffle(dataset_raw)
+
     to_do = len(dataset_raw)
     count = 1
     examples = 0
     classes_list = ["DONOTUSEME"]
 
-    train_path = os.path.join(DATASET_DIR, "train.tfrecord")
     num_train = int(to_do * (1-TEST_SPLIT))
-    train_writer = tf.io.TFRecordWriter(train_path)
 
-    test_path = os.path.join(DATASET_DIR, "test.tfrecord")
     num_test = int(to_do * TEST_SPLIT)
-    test_writer = tf.io.TFRecordWriter(test_path)
+
+    examples_dict = {
+        "train":[],
+        "test":[]
+    }
 
     for example in dataset_raw:
         print(f"\rProcessing file {count} of {to_do}.",end="")
         count += 1
         try:
-            filename, encoded_image_data = get_file_bytes(example["content"], DATASET_DIR, save=False)
+            filename = get_file(example["content"], DATASET_DIR)
 
             xmins, xmaxs, ymins, ymaxs, classes, classes_text = ([],[],[],[],[],[])
 
@@ -54,25 +59,24 @@ def main():
                 ymins.append(min( y_values ))
                 ymaxs.append(max( y_values ))
 
-        
-            tf_example = tf.train.Example(features=tf.train.Features(feature={
-                'image/height': int64_feature(example["annotation"][0]["imageHeight"]),
-                'image/width': int64_feature(example["annotation"][0]["imageWidth"]),
-                'image/filename': bytes_feature(str.encode(filename)),
-                'image/source_id': bytes_feature(str.encode(example["content"])),
-                'image/encoded': bytes_feature(encoded_image_data),
-                'image/format': bytes_feature(b"jpeg"),
-                'image/object/bbox/xmin': float_list_feature(xmins),
-                'image/object/bbox/xmax': float_list_feature(xmaxs),
-                'image/object/bbox/ymin': float_list_feature(ymins),
-                'image/object/bbox/ymax': float_list_feature(ymaxs),
-                'image/object/class/text': bytes_list_feature([str.encode(x) for x in classes_text]),
-                'image/object/class/label': int64_list_feature(classes),
-            }))
+            
+            example = {
+                'image/height': example["annotation"][0]["imageHeight"],
+                'image/width': example["annotation"][0]["imageWidth"],
+                'image/filename': filename,
+                'image/source_id': example["content"],
+                'image/format': "jpeg",
+                'image/object/bbox/xmin': xmins,
+                'image/object/bbox/xmax': xmaxs,
+                'image/object/bbox/ymin': ymins,
+                'image/object/bbox/ymax': ymaxs,
+                'image/object/class/label': classes,
+            }
+
             if examples < num_test:
-                test_writer.write(tf_example.SerializeToString())
+                examples_dict["test"].append(example)
             else:
-                train_writer.write(tf_example.SerializeToString())
+                examples_dict["train"].append(example)
             examples += 1
         except Exception as e:
             print(e)
@@ -83,18 +87,11 @@ def main():
     class_dict.pop(0)
 
     offline_dataset = {
-        "train":{
-            "num_examples":num_train,
-            "tfrecord_path":train_path
-        },
-        "test":{
-            "num_examples":num_test,
-            "tfrecord_path":test_path
-        },
-        "classes":{
+        "classes": {
             "num_classes":len(classes_list),
             "class_names":class_dict,
         },
+        "examples": examples_dict,
     }
 
     print("\nFinished processing dataset.")
@@ -105,34 +102,14 @@ def main():
 
     print("Wrote dataset.yaml.")
 
-def get_file_bytes(url, save_dir, save=True):
+def get_file(url, save_dir):
     image_data = requests.get(url)
     image = io.BytesIO(image_data.content)
     file_name = hashlib.sha256(image.getvalue()).hexdigest() + ".jpg"
-    if save:
-        save_path = os.path.join(save_dir, file_name)
-        with open(save_path,"wb") as f:
-            f.write(image.getvalue())
-    return file_name, image.getvalue()
-
-def int64_feature(value):
-  return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
-
-
-def int64_list_feature(value):
-  return tf.train.Feature(int64_list=tf.train.Int64List(value=value))
-
-
-def bytes_feature(value):
-  return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
-
-
-def bytes_list_feature(value):
-  return tf.train.Feature(bytes_list=tf.train.BytesList(value=value))
-
-
-def float_list_feature(value):
-  return tf.train.Feature(float_list=tf.train.FloatList(value=value))
+    save_path = os.path.join(save_dir, file_name)
+    with open(save_path,"wb") as f:
+        f.write(image.getvalue())
+    return file_name
 
 if __name__ == "__main__":
     main()
