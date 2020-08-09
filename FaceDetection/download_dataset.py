@@ -24,7 +24,7 @@ def main():
     to_do = len(dataset_raw)
     count = 1
     examples = 0
-    classes_list = ["DONOTUSEME"]
+    classes_list = []
 
     num_train = int(to_do * (1-TEST_SPLIT))
 
@@ -84,7 +84,6 @@ def main():
     
     num_train = examples - num_test
     class_dict = dict(enumerate(classes_list))
-    class_dict.pop(0)
 
     offline_dataset = {
         "classes": {
