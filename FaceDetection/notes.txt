@@ -27,3 +27,9 @@ The model itself is currently a secondary prority as the paper itself must come 
 Then I need to plan and draft the discussion. 
 
 The good news is that I think that I have figured out the dataset flow. 
+
+[09/08/20]
+It is working I think. I have drafted the training loop, including tensorboard logging for the losses and learning rate. 
+Overall, it is looking good. The training is working from the looks of things and it runs on a reasonable time scale, although it complains about memory. 
+Still to do is to make tensorboard display the graph aswell so that I can generate nice graphics, find which layers need to be frozen for the second stage of training and actually test a model.
+Then I can start work on the autoencoder part (still to be named).

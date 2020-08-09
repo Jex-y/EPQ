@@ -1,5 +1,6 @@
 # dataset
 data/ 
+logs/
 classes.yml
 
 # Byte-compiled / optimized / DLL files
