@@ -33,3 +33,9 @@ It is working I think. I have drafted the training loop, including tensorboard l
 Overall, it is looking good. The training is working from the looks of things and it runs on a reasonable time scale, although it complains about memory. 
 Still to do is to make tensorboard display the graph aswell so that I can generate nice graphics, find which layers need to be frozen for the second stage of training and actually test a model.
 Then I can start work on the autoencoder part (still to be named).
+
+[10/08/20]
+So making tensorboard dipslay the model graph turns out to be very hard. 
+Trying to implement it lead me down a path of sticking closer to the original keras.model class by overloading the make_train_function but I think that this would acctually be alot harder to do as the training loop is very custom.
+The advantage of doing it that way would be that I could use built in callbacks for tensorboard and for lr scheduling but I wouldn't be able to use features like keras metrics as they just arn't applicable here. 
+Overall, im sticking with the overloading fit function route as it is much simpler even if it is less pure.
