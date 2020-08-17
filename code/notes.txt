@@ -57,3 +57,4 @@ The parts of the writing are going to be:
     - Why we should be worried about it.
     - How my system works and how others might.
     - What we can do to preseve our privacy. 
+See: https://towardsdatascience.com/breaking-neural-networks-with-adversarial-attacks-f4290a9a45aa
