@@ -49,3 +49,11 @@ All the losses exept giou look ok so I increased the weighting of that to see if
 The system is struggling to train so I am going to switch datasets to the WIDER FACE dataset as it is much larger and includes validation and testing datasets.
 http://shuoyang1213.me/WIDERFACE/
 I think I will try and combine this with the other datasets linked there to create a massive dataset to give myself the best chance, for that I think I will need to store it on a HDD instead as even the checkpoints are filling up my dive.
+
+[17/08/20]
+Training is going well. The second part of the system is going to be called baby although idk what it stands for yet.
+The parts of the writing are going to be:
+    - What is facial recgnition.
+    - Why we should be worried about it.
+    - How my system works and how others might.
+    - What we can do to preseve our privacy. 
