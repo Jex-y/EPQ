@@ -1,6 +1,6 @@
 [submodule "code/yolo"]
 	path = code/yolo
-	url = git@github.com:Jex-y/yolo.git
+	url = https://github.com/Jex-y/yolo
 [submodule "code/baby"]
 	path = code/baby
-	url = git@github.com:Jex-y/baby.git
+	url = https://github.com/Jex-y/baby
