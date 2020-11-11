@@ -58,3 +58,8 @@ The parts of the writing are going to be:
     - How my system works and how others might.
     - What we can do to preseve our privacy. 
 See: https://towardsdatascience.com/breaking-neural-networks-with-adversarial-attacks-f4290a9a45aa
+
+[10/11/20]
+We are back to this. I have dropped it as an EPQ and its now just a spare time thing.
+The next think I need to write is a versatile grid serach function. This should take a dict of default arguemnts and a dict of arrays of arguemnts that need to be gridded together with a function that returns an array of performance measures.
+This could be done using a config file to make it even more versatile.

@@ -4,3 +4,9 @@
 [submodule "code/baby"]
 	path = code/baby
 	url = https://github.com/Jex-y/baby
+[submodule "grid"]
+	path = grid
+	url = https://github.com/Jex-y/grid
+[submodule "code/grid"]
+	path = code/grid
+	url = https://github.com/Jex-y/grid
