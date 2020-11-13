@@ -51,7 +51,7 @@ http://shuoyang1213.me/WIDERFACE/
 I think I will try and combine this with the other datasets linked there to create a massive dataset to give myself the best chance, for that I think I will need to store it on a HDD instead as even the checkpoints are filling up my dive.
 
 [17/08/20]
-Training is going well. The second part of the system is going to be called baby although idk what it stands for yet.
+Training is going well. The second part of the system is going to be called face although idk what it stands for yet.
 The parts of the writing are going to be:
     - What is facial recgnition.
     - Why we should be worried about it.

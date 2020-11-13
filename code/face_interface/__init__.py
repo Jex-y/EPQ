@@ -1,4 +1,4 @@
-import baby
+import face
 from grid import IInterface
 import inspect
 
@@ -6,11 +6,11 @@ class Interface(object):
     # TODO: fix inheritance
     def __init__(self, *args, **kwargs):
         #super().__init__(*args, **kwargs)
-        self.train_dataset = baby.VAEDataset("E:\\epq-datasets\\CelebA_aligned\\train", batch_size=96, image_size=128, prefetch=16, workers=4)
-        self.val_dataset = baby.VAEDataset("E:\\epq-datasets\\CelebA_aligned\\val", batch_size=96, image_size=128, prefetch=16, workers=4)
+        self.train_dataset = face.VAEDataset("E:\\epq-datasets\\CelebA_aligned\\train", batch_size=96, image_size=128, prefetch=16, workers=4)
+        self.val_dataset = face.VAEDataset("E:\\epq-datasets\\CelebA_aligned\\val", batch_size=96, image_size=128, prefetch=16, workers=4)
 
     def job(self, args):
-        VAEModel = _run_with_correct_args(baby.models.BABYModelRecreate.__init__, **args)
+        VAEModel = _run_with_correct_args(FACE.models.FACEModelRecreate.__init__, **args)
         history = _run_with_correct_args(lambda **kwargs: VAEModel.fit(self.train_dataset, val_dataset = self.val_dataset, **kwargs), **args)
 
         results = {}

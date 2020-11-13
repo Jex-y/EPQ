@@ -2,7 +2,7 @@
 	path = code/yolo
 	url = https://github.com/Jex-y/yolo
 [submodule "code/baby"]
-	path = code/baby
+	path = code/face
 	url = https://github.com/Jex-y/baby
 [submodule "grid"]
 	path = grid
